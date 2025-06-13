@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 /**
  *
@@ -28,10 +29,26 @@ public class fMahasiswa extends javax.swing.JFrame {
         dtm.addColumn("Prodi");
         
         lsDtMhs();
-        
+        fieldEnabled(false);
+        tombol(false);
+        cBARU.setEnabled(true);
+        cTUTUP.setEnabled(true);
         
         
     }
+    private void fieldEnabled(boolean opsi){
+        txNIM.setEditable(opsi);
+        txNAMA.setEditable(opsi);
+        txJK.setEditable(opsi);
+        txPRODI.setEditable(opsi);
+    }
+    private void tombol(boolean opsi){
+        cBARU.setEnabled(opsi);
+        cUBAH.setEnabled(opsi);
+        cHAPUS.setEnabled(opsi);
+        cTUTUP.setEnabled(opsi);
+    }
+    
     private void lsDtMhs() throws SQLException{
         Connection cnn = koneksi();
         
@@ -71,6 +88,10 @@ public class fMahasiswa extends javax.swing.JFrame {
         txPRODI = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tmhs = new javax.swing.JTable();
+        cUBAH = new javax.swing.JButton();
+        cBARU = new javax.swing.JButton();
+        cHAPUS = new javax.swing.JButton();
+        cTUTUP = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -98,7 +119,33 @@ public class fMahasiswa extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tmhs.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tmhsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tmhs);
+
+        cUBAH.setBackground(new java.awt.Color(204, 255, 255));
+        cUBAH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cUBAH.setText("Ubah");
+
+        cBARU.setBackground(new java.awt.Color(0, 153, 255));
+        cBARU.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cBARU.setText("Baru");
+
+        cHAPUS.setBackground(new java.awt.Color(102, 255, 204));
+        cHAPUS.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cHAPUS.setText("Hapus");
+
+        cTUTUP.setBackground(new java.awt.Color(204, 0, 0));
+        cTUTUP.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cTUTUP.setText("Tutup");
+        cTUTUP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cTUTUPActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -110,15 +157,24 @@ public class fMahasiswa extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2)
-                            .addComponent(txNIM)
-                            .addComponent(txNAMA)
-                            .addComponent(txJK)
-                            .addComponent(txPRODI, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel4)
+                                .addComponent(txNIM)
+                                .addComponent(txNAMA)
+                                .addComponent(txJK)
+                                .addComponent(txPRODI, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(cBARU, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cUBAH, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cHAPUS, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cTUTUP, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel3))
                         .addGap(24, 24, 24))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
@@ -129,14 +185,14 @@ public class fMahasiswa extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txNIM, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3)
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txNAMA, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -146,7 +202,13 @@ public class fMahasiswa extends javax.swing.JFrame {
                         .addGap(17, 17, 17)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txPRODI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txPRODI, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cBARU, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cUBAH, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cHAPUS, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cTUTUP, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -155,6 +217,31 @@ public class fMahasiswa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cTUTUPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cTUTUPActionPerformed
+       int opsi = JOptionPane.showOptionDialog(
+               this, 
+               "Yakin Akan Menutup Form?",
+               "Konfirmasi Tutup form", 
+               JOptionPane.YES_NO_OPTION, 
+               JOptionPane.QUESTION_MESSAGE, 
+               null,null,null);
+       if(opsi == JOptionPane.OK_OPTION){
+           System.exit(0);
+       }
+               
+        System.exit(0);
+    }//GEN-LAST:event_cTUTUPActionPerformed
+
+    private void tmhsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tmhsMouseClicked
+       txNAMA.setText(tmhs.getValueAt(tmhs.getSelectedRow(),1).toString());
+       txNIM.setText(tmhs.getValueAt(tmhs.getSelectedRow(),0).toString());
+       String jkx = (tmhs.getValueAt(tmhs.getSelectedRow() , 2 ).toString().equals("L"))?"Laki-Laki":"Perempuan";
+       txJK.setText(jkx);
+       txPRODI.setText( tmhs.getValueAt(tmhs.getSelectedRow(),3).toString());
+       cUBAH.setEnabled(true);
+       cHAPUS.setEnabled(true);
+    }//GEN-LAST:event_tmhsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -196,6 +283,10 @@ public class fMahasiswa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cBARU;
+    private javax.swing.JButton cHAPUS;
+    private javax.swing.JButton cTUTUP;
+    private javax.swing.JButton cUBAH;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
